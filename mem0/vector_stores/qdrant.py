@@ -94,7 +94,7 @@ class Qdrant(VectorStoreBase):
 
         self.client.create_collection(
             collection_name=self.collection_name,
-            vectors_config=VectorParams(size=vector_size, distance=distance, on_disk=on_disk),
+            vectors_config=VectorParams(size=1024, distance=distance, on_disk=on_disk),
         )
         self._create_filter_indexes()
 

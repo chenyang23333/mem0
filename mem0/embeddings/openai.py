@@ -6,13 +6,20 @@ from openai import OpenAI
 
 from mem0.configs.embeddings.base import BaseEmbedderConfig
 from mem0.embeddings.base import EmbeddingBase
+from sentence_transformers import SentenceTransformer
 
+
+# model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+# model = SentenceTransformer('BAAI/bge-m3')
 
 class OpenAIEmbedding(EmbeddingBase):
     def __init__(self, config: Optional[BaseEmbedderConfig] = None):
         super().__init__(config)
 
-        self.config.model = self.config.model or "text-embedding-3-small"
+        # self.config.model = model
+        # self.config.model = self.config.model or "bge-m3"
+        self.config.model =  "bge-m3"
+        # self.config.embedding_dims = self.config.embedding_dims or 1536  #改动点
         self.config.embedding_dims = self.config.embedding_dims or 1536
 
         api_key = self.config.api_key or os.getenv("OPENAI_API_KEY")
@@ -29,7 +36,8 @@ class OpenAIEmbedding(EmbeddingBase):
                 DeprecationWarning,
             )
 
-        self.client = OpenAI(api_key=api_key, base_url=base_url)
+        # self.client = OpenAI(api_key=api_key, base_url=base_url)
+        self.client = OpenAI(api_key="sk-U0N-3DrAUhLjomhB7KPohA", base_url="http://llms.proxy.sys.ctripcorp.com")
 
     def embed(self, text, memory_action: Optional[Literal["add", "search", "update"]] = None):
         """
@@ -43,7 +51,9 @@ class OpenAIEmbedding(EmbeddingBase):
         """
         text = text.replace("\n", " ")
         return (
-            self.client.embeddings.create(input=[text], model=self.config.model, dimensions=self.config.embedding_dims)
+            self.client.embeddings.create(input=[text], model=self.config.model)
             .data[0]
             .embedding
         )
+        # print(model.encode(text,output_dimension=384).tolist() )
+        # return model.encode(text,output_dimension=384).tolist()  # 转为列表
