@@ -18,7 +18,6 @@ from mem0.vector_stores.base import VectorStoreBase
 
 logger = logging.getLogger(__name__)
 
-
 class Qdrant(VectorStoreBase):
     def __init__(
         self,

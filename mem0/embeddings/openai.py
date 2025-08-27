@@ -50,6 +50,7 @@ class OpenAIEmbedding(EmbeddingBase):
             list: The embedding vector.
         """
         text = text.replace("\n", " ")
+
         return (
             self.client.embeddings.create(input=[text], model=self.config.model)
             .data[0]

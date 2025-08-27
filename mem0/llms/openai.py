@@ -35,7 +35,7 @@ class OpenAILLM(LLMBase):
         super().__init__(config)
 
         if not self.config.model:
-            self.config.model = "gpt-4o"
+            self.config.model = "ali_deepseek-v3"
 
         if os.environ.get("OPENROUTER_API_KEY"):  # Use OpenRouter
             self.client = OpenAI(
@@ -49,8 +49,8 @@ class OpenAILLM(LLMBase):
             base_url = self.config.openai_base_url or os.getenv("OPENAI_BASE_URL") or "https://api.openai.com/v1"
 
             # self.client = OpenAI(api_key=api_key, base_url=base_url)
-            self.client = OpenAI(api_key="sk-FoGiPLX5XcHnK0cubvgWzg",
-                                 base_url="http://proxy.openai.azure.sys.ctripcorp.com/v1")
+            self.client = OpenAI(api_key="sk-U0N-3DrAUhLjomhB7KPohA",
+                                 base_url="http://deepseek.llm.ctripcorp.com")
 
     def _parse_response(self, response, tools):
         """
